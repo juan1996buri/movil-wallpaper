@@ -8,7 +8,9 @@ class MenuItem extends StatelessWidget {
   void _handleItem(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) {
-        return DetailPage();
+        return DetailPage(
+          fondoId: fondoEntity.id,
+        );
       },
     ));
   }

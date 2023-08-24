@@ -1,16 +1,17 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:wallpaper/domain/services/category_service.dart';
+import 'package:wallpaper/domain/models/fondo_entity.dart';
 import 'package:wallpaper/domain/services/fondo_service.dart';
 
 part 'detail_event.dart';
 part 'detail_state.dart';
 
 class DetailBloc extends Bloc<DetailEvent, DetailState> {
+  final FondoService fondoService;
   DetailBloc({
+    required this.fondoService,
     required double screenHeight,
     required ScrollController scrollController,
   }) : super(DetailPageDetail(
@@ -26,12 +27,23 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
     on<SetAnimateScrollChangeEvent>(onSetAnimateScrollChangeEvent);
     on<StateBottomDetailChangeEvent>(onStateBottomDetailChangeEvent);
     on<SetOptionsHeightBottomChangeEvent>(onSetOptionsHeightBottomChangeEvent);
-    on<FindAllFondoEvent>(onFindAllDetailEvent);
+    on<FindAllFirtElementByIdEvent>(onFindAllFondoFirtElementById);
   }
 
-  Future<void> onFindAllDetailEvent(
-      FindAllFondoEvent event, Emitter<DetailState> emit) async {
-    //await fondoService.findAll();
+  Future<void> onFindAllFondoFirtElementById(
+      FindAllFirtElementByIdEvent event, Emitter<DetailState> emit) async {
+    try {
+      emit(FondosFirstElementByIdLoadingState());
+      final result = await fondoService.findAllFirtElemetById(fondoId: 8);
+
+      emit(FondosFirstElementByIdLoadState(
+          fondosFirtElementByIDList: result.fondoList));
+    } catch (e) {
+      if (FindAllFirtElementByIdEvent is FondosFirtElementByIdErrorState) {
+        emit(FondosFirtElementByIdErrorState(
+            messageFirtElementById: e.toString()));
+      }
+    }
   }
 
   void onSetOptionsHeightBottomChangeEvent(

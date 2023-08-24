@@ -3,7 +3,7 @@ import 'package:wallpaper/domain/models/response_entity.dart';
 
 abstract class FondoService {
   Future<ResponseFondoMany> findAll();
-  Future<ResponseFondoOne> findById({required int fondoId});
+  Future<ResponseFondoMany> findAllFirtElemetById({required int fondoId});
 }
 
 class ResponseFondoMany {

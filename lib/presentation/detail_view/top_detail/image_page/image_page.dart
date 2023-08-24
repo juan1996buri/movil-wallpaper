@@ -18,6 +18,15 @@ class ImagePage extends StatelessWidget {
   }
 }
 
+/*
+
+PageView.builder(
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (context, index) {
+        return ItemImage();
+      },
+    );
+*/
 class ItemImage extends StatelessWidget {
   const ItemImage({super.key});
 

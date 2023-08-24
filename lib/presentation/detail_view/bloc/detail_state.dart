@@ -60,9 +60,21 @@ class DetailPageDetail extends DetailState {
       ];
 }
 
-class DetailLoadingState extends DetailState {
+class FondosFirstElementByIdLoadingState extends DetailState {
   @override
   List<Object?> get props => [];
 }
 
-class DetailInitial {}
+class FondosFirstElementByIdLoadState extends DetailState {
+  FondosFirstElementByIdLoadState({required this.fondosFirtElementByIDList});
+  final List<FondoEntity> fondosFirtElementByIDList;
+  @override
+  List<Object?> get props => [fondosFirtElementByIDList];
+}
+
+class FondosFirtElementByIdErrorState extends DetailState {
+  final String messageFirtElementById;
+  FondosFirtElementByIdErrorState({required this.messageFirtElementById});
+  @override
+  List<Object?> get props => [messageFirtElementById];
+}

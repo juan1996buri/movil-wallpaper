@@ -12,7 +12,7 @@ class CategoriesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          CategoriesBloc(categoryService: context.read<CategoryService>())
+          CategoriesBloc(categoryService: context.read<CategoryRepository>())
             ..add(LoadedCategories()),
       child: const CategoriesView(),
     );

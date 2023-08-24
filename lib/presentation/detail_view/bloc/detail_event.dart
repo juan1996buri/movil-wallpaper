@@ -31,7 +31,8 @@ class SetOptionsHeightBottomChangeEvent extends DetailEvent {
   List<Object?> get props => [optionsHeightBottom];
 }
 
-class FindAllFondoEvent extends DetailEvent {
+class FindAllFirtElementByIdEvent extends DetailEvent {
+  FindAllFirtElementByIdEvent();
   @override
   List<Object?> get props => [];
 }

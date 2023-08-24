@@ -11,7 +11,6 @@ class FondoRepository implements FondoService {
   @override
   Future<ResponseFondoMany> findAll() async {
     final responsejson = await http.get(Uri.parse(url));
-
     final fondoList =
         fondoEntityFromJson(jsonEncode(jsonDecode(responsejson.body)["data"]));
     final responseEntity = responseEntityFromJson(responsejson.body);
@@ -20,15 +19,16 @@ class FondoRepository implements FondoService {
   }
 
   @override
-  Future<ResponseFondoOne> findById({required int fondoId}) async {
-    final responsejson = await http.get(Uri.parse('$url$fondoId'));
+  Future<ResponseFondoMany> findAllFirtElemetById(
+      {required int fondoId}) async {
+    final responsejson =
+        await http.get(Uri.parse('${url}firt-element-by-id/$fondoId'));
+
+    final fondoList =
+        fondoEntityFromJson(jsonEncode(jsonDecode(responsejson.body)["data"]));
+
     final responseEntity = responseEntityFromJson(responsejson.body);
-    final fondoEntity =
-        FondoEntity.fromJson(jsonDecode(responsejson.body)["data"]);
-
-    print(jsonEncode(fondoEntity));
-
-    return ResponseFondoOne(
-        fondoEntity: fondoEntity, responseEntity: responseEntity);
+    return ResponseFondoMany(
+        fondoList: fondoList, responseEntity: responseEntity);
   }
 }
