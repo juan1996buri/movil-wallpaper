@@ -10,6 +10,7 @@ class CategoriesLoadingState extends CategoriesState {
 
 class CategoriesLoadedState extends CategoriesState {
   final List<CategoryEntity> categoriesList;
+
   CategoriesLoadedState(this.categoriesList);
   @override
   List<Object?> get props => [categoriesList];

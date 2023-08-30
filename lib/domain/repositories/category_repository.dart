@@ -5,7 +5,7 @@ import 'package:wallpaper/domain/models/category_entity.dart';
 import 'package:wallpaper/domain/models/response_entity.dart';
 import '../services/category_service.dart';
 
-const url = "http://localhost:4000/api/v1/categoria";
+const url = "http://192.168.100.18:4000/api/v1/categoria";
 
 List<CategoryEntity> categories = [
   CategoryEntity(

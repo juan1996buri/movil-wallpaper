@@ -12,9 +12,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeInitial> {
 
   void onNavigationButtom(
       NavigationButtomChangeEvent event, Emitter<HomeInitial> emit) {
-    // state.pageController.jumpToPage(
-    //   event.currentValue,
-    // );
     emit(HomeInitial(selectedIndex: event.currentValue));
   }
 

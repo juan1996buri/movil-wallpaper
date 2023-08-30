@@ -12,6 +12,11 @@ class PageItemChangeEvent extends DetailEvent {
   List<Object?> get props => [isActive, wallpaperStatus];
 }
 
+class DetailInitialEvent extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
+
 class StateBottomDetailChangeEvent extends DetailEvent {
   @override
   List<Object?> get props => [];

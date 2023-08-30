@@ -1,18 +1,5 @@
 part of 'menu_bloc.dart';
 
-class MenuTabItem {
-  final String title;
-  MenuTabItem({required this.title});
-}
-
-List<MenuTabItem> menuTabList = [
-  MenuTabItem(title: "random"),
-  MenuTabItem(title: "popular"),
-  MenuTabItem(title: "nuevos"),
-  MenuTabItem(title: "ai art"),
-  MenuTabItem(title: "recomendados"),
-];
-
 @immutable
 abstract class MenuState extends Equatable {}
 
@@ -22,10 +9,19 @@ class FondoLoadingState extends MenuState {
 }
 
 class FondoLoadedState extends MenuState {
-  final List<FondoEntity> fondoList;
-  FondoLoadedState(this.fondoList);
+  final List<FondoEntity> fondosTotalList;
+  final List<FondoEntity> fondosNewList;
+  final List<FondoEntity> fondosRecommendedList;
+
+  FondoLoadedState({
+    required this.fondosTotalList,
+    required this.fondosNewList,
+    required this.fondosRecommendedList,
+  });
+
   @override
-  List<Object?> get props => [fondoList];
+  List<Object?> get props =>
+      [fondosTotalList, fondosNewList, fondosRecommendedList];
 }
 
 class FondoErrorState extends MenuState {

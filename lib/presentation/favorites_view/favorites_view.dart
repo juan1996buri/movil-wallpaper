@@ -7,7 +7,7 @@ class tabItem {
 }
 
 List<tabItem> tabItems = [
-  tabItem(title: "random"),
+  tabItem(title: "todo"),
   tabItem(title: "popular"),
   tabItem(title: "nuevos"),
   tabItem(title: "recomendados"),

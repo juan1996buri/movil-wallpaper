@@ -1,3 +1,11 @@
+import 'dart:convert';
+
+List<ColorEntity> colorEntityFromJson(String str) => List<ColorEntity>.from(
+    json.decode(str).map((x) => ColorEntity.fromJson(x)));
+
+String colorEntityToJson(List<ColorEntity> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 class ColorEntity {
   int id;
   String nombre;

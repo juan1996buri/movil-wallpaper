@@ -17,7 +17,7 @@ class AnimatedPersistentHeader extends StatelessWidget {
 
   final double percent;
 
-  Color _changeColorAppBar(DetailPageDetail detailPageDetailState) {
+  Color _changeColorAppBar(DetailPageDetailState detailPageDetailState) {
     return detailPageDetailState.wallpaperStatus == WallpaperStatus.show
         ? Wallpaper.primary
         : Wallpaper.primary.withOpacity((percent / 0.85).clamp(0, 1));
@@ -26,12 +26,8 @@ class AnimatedPersistentHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return BlocBuilder<DetailBloc, DetailState>(
+    return BlocBuilder<DetailBloc, DetailPageDetailState>(
       builder: (context, state) {
-        late DetailPageDetail detailPageDetailState;
-        if (state is DetailPageDetail) {
-          detailPageDetailState = state;
-        }
         return Stack(
           children: [
             Positioned(
@@ -42,7 +38,7 @@ class AnimatedPersistentHeader extends StatelessWidget {
               child: ImagePage(),
             ),
             AnimatedPositioned(
-              bottom: detailPageDetailState.optionsHeightBottom,
+              bottom: state.optionsHeightBottom,
               right: 0,
               left: 0,
               duration: timeDuration,
@@ -58,7 +54,7 @@ class AnimatedPersistentHeader extends StatelessWidget {
                       color: Colors.white,
                     ),
                     decoration: BoxDecoration(
-                        color: _changeColorAppBar(detailPageDetailState),
+                        color: _changeColorAppBar(state),
                         borderRadius: BorderRadius.circular(100)),
                   ),
                   InkWell(
@@ -146,12 +142,12 @@ class AnimatedPersistentHeader extends StatelessWidget {
               top: 0,
               left: 0,
               right: 0,
-              height: detailPageDetailState.isActive ? kToolbarHeight : 0,
+              height: state.isActive ? kToolbarHeight : 0,
               child: SafeArea(
                 child: ClipRect(
                   child: AnimatedContainer(
                     duration: timeDuration,
-                    color: _changeColorAppBar(detailPageDetailState),
+                    color: _changeColorAppBar(state),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,

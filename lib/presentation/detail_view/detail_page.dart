@@ -1,29 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wallpaper/domain/models/fondo_entity.dart';
 import 'package:wallpaper/domain/repositories/fondo_repository.dart';
-import 'package:wallpaper/domain/services/fondo_service.dart';
 import 'package:wallpaper/presentation/detail_view/bloc/detail_bloc.dart';
+import 'package:wallpaper/presentation/detail_view/bottom_detail/bloc/bottom_detail_bloc.dart';
 import 'package:wallpaper/presentation/detail_view/detail_view.dart';
+import 'package:wallpaper/presentation/detail_view/top_detail/image_page/bloc/image_page_bloc.dart';
 
 class DetailPage extends StatelessWidget {
   const DetailPage({
     super.key,
-    required this.fondoId,
+    required this.fondoEntity,
+    required this.elementPosition,
+    this.tabItemPosition = 0,
+    required this.tabNameState,
+    this.nameColor = "",
   });
 
-  final int fondoId;
+  final FondoEntity fondoEntity;
+  final int elementPosition;
+  final int? tabItemPosition;
+  final TabNameState tabNameState;
+  final String? nameColor;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return BlocProvider(
-      create: (context) => DetailBloc(
-        fondoService: context.read<FondoRepository>(),
-        screenHeight: size.height,
-        scrollController:
-            ScrollController(initialScrollOffset: size.height * .25),
+    return MultiBlocProvider(providers: [
+      BlocProvider(
+        create: (context) => DetailBloc(
+          screenHeight: size.height,
+          scrollController:
+              ScrollController(initialScrollOffset: size.height * .25),
+        ),
       ),
-      child: DetailView(),
-    );
+      BlocProvider(
+        create: (context) =>
+            ImagePageBloc(fondoService: context.read<FondoRepository>())
+              ..init(
+                elementPosition,
+                tabItemPosition!,
+                nameColor!,
+                tabNameState,
+              )
+              ..add(const ImagePageLoandingEvent()),
+      ),
+      BlocProvider(
+        create: (context) =>
+            BottomDetailBloc(fondoService: context.read<FondoRepository>())
+              ..init(fondoEntity)
+              ..add(
+                FondosBottomLoandingEvent(),
+              ),
+      )
+    ], child: const DetailView());
   }
 }

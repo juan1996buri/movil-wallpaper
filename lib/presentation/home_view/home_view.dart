@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wallpaper/config/themes/wallpaper.dart';
-import 'package:wallpaper/presentation/categories_view/categories_page.dart';
-import 'package:wallpaper/presentation/favorites_view/favorites_page.dart';
+import 'package:wallpaper/presentation/categories_view/categories_view.dart';
+import 'package:wallpaper/presentation/favorites_view/favorites_view.dart';
 import 'package:wallpaper/presentation/home_view/bloc/home_bloc.dart';
-import 'package:wallpaper/presentation/menu_view/menu_page.dart';
+import 'package:wallpaper/presentation/menu_view/menu_view.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
   static const List<Widget> _widgetOptions = [
-    MenuPage(),
-    CategoriesPage(),
-    FavoritesPage(),
+    MenuView(),
+    CategoriesView(),
+    FavoritesView(),
   ];
 
   void handleTap(int currentValue, BuildContext context) {

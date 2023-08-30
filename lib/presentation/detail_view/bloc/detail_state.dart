@@ -5,20 +5,17 @@ enum WallpaperStatus {
   disguise,
 }
 
-@immutable
-abstract class DetailState extends Equatable {}
-
-class DetailPageDetail extends DetailState {
-  DetailPageDetail({
+class DetailPageDetailState extends Equatable {
+  DetailPageDetailState({
     required this.wallpaperStatus,
     required this.isActive,
     required this.screenHeight,
     required this.isAnimationScroll,
-    required this.scrollControllerButtom,
+    required this.scrollControllerBottom,
     required this.optionsHeightBottom,
     required this.debounceTimer,
   });
-  final ScrollController scrollControllerButtom;
+  final ScrollController scrollControllerBottom;
   final double optionsHeightBottom;
 
   final bool isActive;
@@ -27,25 +24,25 @@ class DetailPageDetail extends DetailState {
   final bool isAnimationScroll;
   Timer debounceTimer;
 
-  DetailPageDetail copyWith({
+  DetailPageDetailState copyWith({
     bool? isActive,
     WallpaperStatus? wallpaperStatus,
     double? screenHeight,
     bool? isAnimationScroll,
     double? optionsHeightBottom,
   }) {
-    return DetailPageDetail(
+    return DetailPageDetailState(
         isActive: isActive ?? this.isActive,
         wallpaperStatus: wallpaperStatus ?? this.wallpaperStatus,
         screenHeight: screenHeight ?? this.screenHeight,
         isAnimationScroll: isAnimationScroll ?? this.isAnimationScroll,
-        scrollControllerButtom: scrollControllerButtom,
+        scrollControllerBottom: scrollControllerBottom,
         debounceTimer: debounceTimer,
         optionsHeightBottom: optionsHeightBottom ?? this.optionsHeightBottom);
   }
 
   void dispose() {
-    scrollControllerButtom.dispose();
+    scrollControllerBottom.dispose();
   }
 
   @override
@@ -54,27 +51,8 @@ class DetailPageDetail extends DetailState {
         wallpaperStatus,
         screenHeight,
         isAnimationScroll,
-        scrollControllerButtom,
+        scrollControllerBottom,
         debounceTimer,
         optionsHeightBottom
       ];
-}
-
-class FondosFirstElementByIdLoadingState extends DetailState {
-  @override
-  List<Object?> get props => [];
-}
-
-class FondosFirstElementByIdLoadState extends DetailState {
-  FondosFirstElementByIdLoadState({required this.fondosFirtElementByIDList});
-  final List<FondoEntity> fondosFirtElementByIDList;
-  @override
-  List<Object?> get props => [fondosFirtElementByIDList];
-}
-
-class FondosFirtElementByIdErrorState extends DetailState {
-  final String messageFirtElementById;
-  FondosFirtElementByIdErrorState({required this.messageFirtElementById});
-  @override
-  List<Object?> get props => [messageFirtElementById];
 }

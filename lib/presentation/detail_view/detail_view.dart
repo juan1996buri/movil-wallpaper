@@ -11,8 +11,8 @@ const Duration timeDuration = Duration(milliseconds: 200);
 class DetailView extends StatelessWidget {
   const DetailView({super.key});
 
-  void _isScrollingListener(
-      BuildContext context, DetailPageDetail currentPageDetailState) async {
+  void _isScrollingListener(BuildContext context,
+      DetailPageDetailState currentPageDetailState) async {
     if (currentPageDetailState.debounceTimer.isActive) {
       currentPageDetailState.debounceTimer.cancel();
     }
@@ -21,11 +21,11 @@ class DetailView extends StatelessWidget {
       Duration.zero,
       () {
         var percent =
-            currentPageDetailState.scrollControllerButtom.position.pixels /
+            currentPageDetailState.scrollControllerBottom.position.pixels /
                 currentPageDetailState.screenHeight;
 
         if (!currentPageDetailState
-            .scrollControllerButtom.position.isScrollingNotifier.value) {
+            .scrollControllerBottom.position.isScrollingNotifier.value) {
           if (percent > 0.53 &&
               percent <= 1.0 &&
               !currentPageDetailState.isAnimationScroll) {
@@ -34,7 +34,7 @@ class DetailView extends StatelessWidget {
               context
                   .read<DetailBloc>()
                   .add(SetAnimateScrollChangeEvent(isAnimationScroll: true));
-              currentPageDetailState.scrollControllerButtom
+              currentPageDetailState.scrollControllerBottom
                   .animateTo(
                       currentPageDetailState.screenHeight - kToolbarHeight,
                       duration: const Duration(milliseconds: 400),
@@ -55,7 +55,7 @@ class DetailView extends StatelessWidget {
               context
                   .read<DetailBloc>()
                   .add(SetAnimateScrollChangeEvent(isAnimationScroll: true));
-              currentPageDetailState.scrollControllerButtom
+              currentPageDetailState.scrollControllerBottom
                   .animateTo(
                 currentPageDetailState.screenHeight * 0.25,
                 duration: const Duration(milliseconds: 400),
@@ -78,33 +78,25 @@ class DetailView extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Wallpaper.primary,
-      body: BlocBuilder<DetailBloc, DetailState>(
+      body: BlocBuilder<DetailBloc, DetailPageDetailState>(
         builder: (context, state) {
-          late DetailPageDetail currentPageDetailState;
-          if (state is DetailPageDetail) {
-            currentPageDetailState = state;
-          }
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-            currentPageDetailState
-                .scrollControllerButtom.position.isScrollingNotifier
+            state.scrollControllerBottom.position.isScrollingNotifier
                 .addListener(() {
-              _isScrollingListener(context, currentPageDetailState);
+              _isScrollingListener(context, state);
             });
           });
           return SafeArea(
-            top: currentPageDetailState.wallpaperStatus == WallpaperStatus.show
-                ? false
-                : true,
+            top: state.wallpaperStatus == WallpaperStatus.show ? false : true,
             child: Stack(
               children: [
                 AbsorbPointer(
-                  absorbing: currentPageDetailState.isAnimationScroll,
+                  absorbing: state.isAnimationScroll,
                   child: CustomScrollView(
-                    physics: currentPageDetailState.wallpaperStatus ==
-                            WallpaperStatus.show
+                    physics: state.wallpaperStatus == WallpaperStatus.show
                         ? const NeverScrollableScrollPhysics()
                         : const AlwaysScrollableScrollPhysics(),
-                    controller: currentPageDetailState.scrollControllerButtom,
+                    controller: state.scrollControllerBottom,
                     slivers: [
                       SliverPersistentHeader(
                         pinned: true,

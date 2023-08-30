@@ -4,5 +4,8 @@ part of 'menu_bloc.dart';
 abstract class MenuEvent {}
 
 class FondoLoadedEvent extends MenuEvent {
-  FondoLoadedEvent();
+  final CategoryEntity? categoryEntity;
+  FondoLoadedEvent({
+    this.categoryEntity,
+  });
 }
